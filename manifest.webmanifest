@@ -8,6 +8,28 @@
   "orientation": "portrait",
   "background_color": "#040816",
   "theme_color": "#040816",
+  "shortcuts": [
+    {
+      "name": "+250 ml water",
+      "short_name": "Water",
+      "url": "/calorie-snap/q?a=water250"
+    },
+    {
+      "name": "Meal photo",
+      "short_name": "Meal",
+      "url": "/calorie-snap/q?a=meal"
+    },
+    {
+      "name": "Start today's workout",
+      "short_name": "Workout",
+      "url": "/calorie-snap/q?a=workout"
+    },
+    {
+      "name": "Sleep mode",
+      "short_name": "Sleep",
+      "url": "/calorie-snap/q?a=sleep"
+    }
+  ],
   "icons": [
     {
       "src": "/calorie-snap/icon-192.png",
