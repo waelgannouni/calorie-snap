@@ -1,13 +1,13 @@
 {
-  "name": "CalorieSnap",
-  "short_name": "CalorieSnap",
-  "description": "Snap your plate, get the calories, know when to stop.",
+  "name": "AURA",
+  "short_name": "AURA",
+  "description": "Your AI fitness companion. Train. Eat. Live better.",
   "start_url": "/calorie-snap/",
   "scope": "/calorie-snap/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0e1412",
-  "theme_color": "#16a34a",
+  "background_color": "#040816",
+  "theme_color": "#040816",
   "icons": [
     {
       "src": "/calorie-snap/icon-192.png",
