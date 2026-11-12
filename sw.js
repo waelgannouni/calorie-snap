@@ -3,8 +3,9 @@
  * - The page itself (index.html) → network-first, so a new deploy shows up on next open,
  *   falling back to the cached page when offline.
  * - API calls (Gemini, USDA, Open Food Facts) are never cached.
+ * - Push: AURA reminders (sent by a free GitHub scheduler); tapping one opens the exact action.
  */
-const CACHE = 'cs-shell-v1';
+const CACHE = 'cs-shell-v2';
 const SCOPE = self.registration.scope; // e.g. https://user.github.io/calorie-snap/
 
 self.addEventListener('install', (e) => {
@@ -52,5 +53,37 @@ self.addEventListener('fetch', (e) => {
           return res;
         }),
     ),
+  );
+});
+
+// ---------- AURA reminders ----------
+self.addEventListener('push', (e) => {
+  let d = {};
+  try {
+    d = e.data ? e.data.json() : {};
+  } catch {
+    d = { title: 'AURA', body: e.data ? e.data.text() : '' };
+  }
+  e.waitUntil(
+    self.registration.showNotification(d.title || 'AURA', {
+      body: d.body || '',
+      icon: SCOPE + 'icon-192.png',
+      badge: SCOPE + 'icon-192.png',
+      tag: d.tag || 'aura',
+      data: { url: d.url ? SCOPE + d.url.replace(/^\//, '') : SCOPE },
+    }),
+  );
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || SCOPE;
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+      for (const c of list) {
+        if (c.url.startsWith(SCOPE) && 'focus' in c) return c.focus().then(() => (c.navigate ? c.navigate(url) : undefined));
+      }
+      return self.clients.openWindow(url);
+    }),
   );
 });
